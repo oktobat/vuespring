@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="/css/common/common.css" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/include/header.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/include/footer.css}" rel="stylesheet" type="text/css">
+    <link href="/css/user/photo_review.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div th:include="header :: headerFragment"></div>
+
+<section>
+    <div id="section_wrap">
+        <th:block th:if="${article.pr_photo0 != null and !article.pr_photo0.isEmpty()}">
+            <p>
+                <img th:src="@{'/files/' + ${article.pr_photo0}}">
+            </p>
+        </th:block>
+        <th:block th:if="${article.pr_photo0 == null or article.pr_photo0.isEmpty()}">
+            <p>
+                <img src="/img/user/small_banner1.png">
+            </p>
+        </th:block>
+
+        <p th:text="${article.pr_name}"></p>
+        <p th:text="${article.pr_author}"></p>
+        <p th:text="${article.pr_publisher}"></p>
+    </div>
+    <div style="text-align:center">
+        <a href="/photoReview">목록</a>
+        <a th:href="@{/photoReviewRemove(pr_no=${article.pr_no})}" class="remove">삭제</a>
+        <a th:href="@{/photoReviewModifyForm(pr_no=${article.pr_no})}">수정</a>
+    </div>
+</section>
+
+<div th:include="footer :: footerFragment"></div>
+
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js}"></script>
+<script th:src="@{/js/commonjq.js}"></script>
+<script th:inline="javascript">
+    jQ(".remove").on("click", function(){
+       let answer = confirm("정말로 삭제하시겠습니까?")
+       if (!answer) {
+            return false
+       }
+    })
+</script>
+
+
+</body>
+</html>

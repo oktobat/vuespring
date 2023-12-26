@@ -1,0 +1,24 @@
+<div th:fragment="headerFragment">
+<header>
+
+    <div id="header_wrap">
+        <div class="menu">
+            <ul>
+                <li><a class="user" href="/">홈</a></li>
+                <li><a class="user" href="/getHopeBooks">희망도서목록</a></li>
+                <li><a class="user" href="/photoReview">포토 후기</a></li>
+            </ul>
+        </div>
+        <div class="title">
+            <h3>한국 도서관 - 도서 대여 서비스</h3>
+        </div>
+        <div style="text-align:center; margin:30px; display:flex; justify-content:center; align-items:center">
+            <p><span id="wicon"><img src="" /></span></p>
+            <p style="margin:0 10px">(<span id="weather"></span>)</p>
+            <p style="margin:0 10px">최저기온: <span id="mintemp"></span></p>
+            <p style="margin:0 10px">최고기온: <span id="maxtemp"></span></p>
+            <p style="margin:0 10px">습도 : <span id="humidity"></span></p>
+        </div>
+    </div>
+</header>
+</div>

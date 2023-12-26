@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="/css/common/common.css" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/include/header.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/include/footer.css}" rel="stylesheet" type="text/css">
+    <link href="/css/user/home.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div th:include="header :: headerFragment"></div>
+
+<section>
+
+    <div id="section_wrap">
+
+        <div class="banners">
+            <div class="large_banner">
+                <a href="#none"><img src="/img/user/large_banner.jpg"></a>
+            </div>
+            <div class="small_banners">
+                <ul>
+                    <li><a href="#none"><img src="/img/user/small_banner1.png"></a></li>
+                    <li><a href="#none"><img src="/img/user/small_banner2.png"></a></li>
+                    <li><a href="#none"><img src="/img/user/small_banner3.png"></a></li>
+                    <li><a href="#none"><img src="/img/user/small_banner4.png"></a></li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<div th:include="footer :: footerFragment"></div>
+
+
+</body>
+</html>

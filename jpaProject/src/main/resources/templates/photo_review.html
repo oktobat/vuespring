@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>포토 후기</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="/css/common/common.css" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/include/header.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/include/footer.css}" rel="stylesheet" type="text/css">
+    <link href="/css/user/photo_review.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div th:include="header :: headerFragment"></div>
+
+<section>
+
+    <div id="section_wrap">
+
+        <div class="word">
+            <h3>도서 포토후기</h3>
+        </div>
+
+        <div class="photoReviewList"></div>
+
+        <div class="photo_review_form">
+            <form name="photo_review">
+                <input type="hidden"	name="u_m_no" 		placeholder="유저번호" value="1">
+                <input type="text"		name="pr_name" 		placeholder="도서명"> <br>
+                <input type="text"		name="pr_author" 	placeholder="저자"> <br>
+                <input type="text"		name="pr_publisher"	placeholder="출판사"> <br>
+                <input type="file" 		name="pr_photo0" 	class="files"> <br>
+                <input type="file" 		name="pr_photo1" 	class="files"> <br>
+                <input type="file" 		name="pr_photo2" 	class="files"> <br>
+                <input type="button"	value="전송" th:onclick="photoReview()">
+                <input type="reset"		value="취소">
+            </form>
+        </div>
+
+
+
+    </div>
+
+</section>
+
+<div th:include="footer :: footerFragment"></div>
+
+
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js}"></script>
+<script th:src="@{/js/commonjq.js}"></script>
+<script th:inline="javascript">
+    let form = document.photo_review;
+    jQ.ajax({
+        type :"GET",
+        contentType : "application/json; charset=UTF-8",
+        url : "/photoReviewList",
+        success : function(rdata){
+            console.log(rdata)
+            jQ(".photoReviewList").html(rdata)
+        },
+        error : function(error){
+            console.log(error)
+        }
+    })
+
+
+    function photoReview(){
+        const formData = new FormData();
+        console.log("들어왔니")
+        let data = {
+					u_m_no 		 : form.u_m_no.value,
+					pr_name      : form.pr_name.value,
+					pr_author  	 : form.pr_author.value,
+					pr_publisher : form.pr_publisher.value
+		}
+        console.log(data.pr_author);
+        let fileInput = jQ(".files")
+        for (let i=0; i<fileInput.length; i++) {
+            if (fileInput[i].files.length>0) {
+                for (let j=0; j<fileInput[i].files.length; j++) {
+                    formData.append("file", jQ('.files')[i].files[j] )
+                }
+            }
+        }
+
+
+        formData.append("data", new Blob([ JSON.stringify(data) ], {type:"application/json"}))
+
+        form.pr_name.value = "";
+        form.pr_author.value = "";
+        form.pr_publisher.value = "";
+        form.pr_photo0.value = "";
+        form.pr_photo1.value = "";
+        form.pr_photo2.value = "";
+
+        jQ.ajax({
+            type :"POST",
+            enctype : "multipart/form-data",
+            url : "/photoReviewWrite",
+            data : formData,
+            contentType : false,
+            processData : false,
+            cache : false,
+            success : function(rdata){
+                jQ(".photoReviewList").html(rdata)
+            },
+            error : function(error){
+                console.log(error)
+            }
+        })
+
+
+    }
+</script>
+
+</body>
+</html>
